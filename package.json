@@ -2,8 +2,8 @@
   "name": "@dhis2/d2-ui-forms",
   "version": "5.0.0",
   "description": "Forms for D2-ui",
-  "main": "./build/cjs/index.js",
-  "module": "./build/es/index.js",
+  "main": "./cjs/index.js",
+  "module": "./es/index.js",
   "license": "BSD-3-Clause",
   "author": "",
   "scripts": {
