@@ -1,8 +1,28 @@
-import _Object$assign from 'babel-runtime/core-js/object/assign';
-import _classCallCheck from 'babel-runtime/helpers/classCallCheck';
-import _createClass from 'babel-runtime/helpers/createClass';
-import _Promise from 'babel-runtime/core-js/promise';
-import { Observable, Subject } from 'rxjs';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _assign = require('babel-runtime/core-js/object/assign');
+
+var _assign2 = _interopRequireDefault(_assign);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _promise = require('babel-runtime/core-js/promise');
+
+var _promise2 = _interopRequireDefault(_promise);
+
+var _rxjs = require('rxjs');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Run `validatorFunctions` in parallel and returns a resolved `Promise` with the validation status.
@@ -13,7 +33,7 @@ import { Observable, Subject } from 'rxjs';
  * contains the value that the failed validator function rejected with.
  */
 function runValidatorFunctions(validatorFunctions, value, formState) {
-    return _Promise.all(validatorFunctions.map(function (validator) {
+    return _promise2.default.all(validatorFunctions.map(function (validator) {
         return validator.call(null, value, formState);
     }))
     // All validators passed
@@ -36,7 +56,7 @@ var AsyncValidatorRunner = function () {
      * @param {Rx.Scheduler} [scheduler] Optional scheduler to be used for the Rx methods that can accept one.
      */
     function AsyncValidatorRunner(scheduler) {
-        _classCallCheck(this, AsyncValidatorRunner);
+        (0, _classCallCheck3.default)(this, AsyncValidatorRunner);
 
         // Rx.Scheduler to be used to run the operations on
         this.scheduler = scheduler;
@@ -44,7 +64,7 @@ var AsyncValidatorRunner = function () {
         // Rx.Subject that will serve as the validator pipeline
         // The Runner passes the fields and values and emits
         // success
-        this.validatorPipeline = new Subject();
+        this.validatorPipeline = new _rxjs.Subject();
 
         // The amount of time to be used for debouncing the field values
         this.debounceTimeInMs = 400;
@@ -64,7 +84,7 @@ var AsyncValidatorRunner = function () {
      */
 
 
-    _createClass(AsyncValidatorRunner, [{
+    (0, _createClass3.default)(AsyncValidatorRunner, [{
         key: 'run',
         value: function run(fieldName) {
             var asyncValidators = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
@@ -97,8 +117,8 @@ var AsyncValidatorRunner = function () {
             .debounceTime(this.debounceTimeInMs, this.scheduler)
             // .do((v) => console.log(v.value))
             .map(function (field) {
-                return Observable.fromPromise(runValidatorFunctions(field.asyncValidators, field.value, formState)).map(function (status) {
-                    return _Object$assign(status, { fieldName: field.fieldName, value: field.value });
+                return _rxjs.Observable.fromPromise(runValidatorFunctions(field.asyncValidators, field.value, formState)).map(function (status) {
+                    return (0, _assign2.default)(status, { fieldName: field.fieldName, value: field.value });
                 });
             })
             // Flatten all observables in the correct order they should be processed
@@ -120,8 +140,7 @@ var AsyncValidatorRunner = function () {
             return new AsyncValidatorRunner(scheduler);
         }
     }]);
-
     return AsyncValidatorRunner;
 }();
 
-export default AsyncValidatorRunner;
+exports.default = AsyncValidatorRunner;

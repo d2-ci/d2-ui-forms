@@ -1,33 +1,80 @@
-import _defineProperty from 'babel-runtime/helpers/defineProperty';
-import _extends from 'babel-runtime/helpers/extends';
-import _Object$assign from 'babel-runtime/core-js/object/assign';
-import _objectWithoutProperties from 'babel-runtime/helpers/objectWithoutProperties';
-import _Object$keys from 'babel-runtime/core-js/object/keys';
-import _Object$getPrototypeOf from 'babel-runtime/core-js/object/get-prototype-of';
-import _classCallCheck from 'babel-runtime/helpers/classCallCheck';
-import _createClass from 'babel-runtime/helpers/createClass';
-import _possibleConstructorReturn from 'babel-runtime/helpers/possibleConstructorReturn';
-import _inherits from 'babel-runtime/helpers/inherits';
-import React from 'react';
-import PropTypes from 'prop-types';
-import { isObject, get } from 'lodash';
-import AsyncValidatorRunner from './AsyncValidatorRunner';
+'use strict';
 
-import { CircularProgress } from '@dhis2/d2-ui-core';
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _defineProperty2 = require('babel-runtime/helpers/defineProperty');
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _assign = require('babel-runtime/core-js/object/assign');
+
+var _assign2 = _interopRequireDefault(_assign);
+
+var _objectWithoutProperties2 = require('babel-runtime/helpers/objectWithoutProperties');
+
+var _objectWithoutProperties3 = _interopRequireDefault(_objectWithoutProperties2);
+
+var _keys = require('babel-runtime/core-js/object/keys');
+
+var _keys2 = _interopRequireDefault(_keys);
+
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _lodash = require('lodash');
+
+var _AsyncValidatorRunner = require('./AsyncValidatorRunner');
+
+var _AsyncValidatorRunner2 = _interopRequireDefault(_AsyncValidatorRunner);
+
+var _d2UiCore = require('@dhis2/d2-ui-core');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var noop = function noop() {};
 
 var FormBuilder = function (_React$Component) {
-    _inherits(FormBuilder, _React$Component);
+    (0, _inherits3.default)(FormBuilder, _React$Component);
 
     function FormBuilder(props) {
-        _classCallCheck(this, FormBuilder);
+        (0, _classCallCheck3.default)(this, FormBuilder);
 
-        var _this = _possibleConstructorReturn(this, (FormBuilder.__proto__ || _Object$getPrototypeOf(FormBuilder)).call(this, props));
+        var _this = (0, _possibleConstructorReturn3.default)(this, (FormBuilder.__proto__ || (0, _getPrototypeOf2.default)(FormBuilder)).call(this, props));
 
         _this.state = _this.initState(props);
         _this.asyncValidators = _this.createAsyncValidators(props);
-        _this.asyncValidationRunner = props.asyncValidationRunner || new AsyncValidatorRunner();
+        _this.asyncValidationRunner = props.asyncValidationRunner || new _AsyncValidatorRunner2.default();
 
         _this.getFieldProp = _this.getFieldProp.bind(_this);
         _this.getStateClone = _this.getStateClone.bind(_this);
@@ -44,7 +91,7 @@ var FormBuilder = function (_React$Component) {
      */
 
 
-    _createClass(FormBuilder, [{
+    (0, _createClass3.default)(FormBuilder, [{
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(props) {
             var _this2 = this;
@@ -88,7 +135,7 @@ var FormBuilder = function (_React$Component) {
                     valid: this.state.form.valid,
                     validating: this.state.form.validating
                 },
-                fields: _Object$keys(this.state.fields).reduce(function (p, c) {
+                fields: (0, _keys2.default)(this.state.fields).reduce(function (p, c) {
                     p[c] = {
                         pristine: _this3.state.fields[c].pristine,
                         validating: _this3.state.fields[c].validating,
@@ -125,7 +172,7 @@ var FormBuilder = function (_React$Component) {
             return this.props.fields.map(function (field) {
                 var _ref = field.props || {},
                     errorTextProp = _ref.errorTextProp,
-                    props = _objectWithoutProperties(_ref, ['errorTextProp']);
+                    props = (0, _objectWithoutProperties3.default)(_ref, ['errorTextProp']);
 
                 var fieldState = _this4.state.fields[field.name] || {};
 
@@ -139,11 +186,11 @@ var FormBuilder = function (_React$Component) {
 
                 var errorText = fieldState && fieldState.validating ? field.validatingLabelText || _this4.props.validatingLabelText : errorTextProp;
 
-                return React.createElement(
+                return _react2.default.createElement(
                     'div',
-                    { key: field.name, style: _Object$assign({}, styles.field, _this4.props.fieldWrapStyle) },
-                    fieldState.validating ? React.createElement(CircularProgress, { mode: 'indeterminate', size: 0.33, style: styles.progress }) : undefined,
-                    React.createElement(field.component, _extends({
+                    { key: field.name, style: (0, _assign2.default)({}, styles.field, _this4.props.fieldWrapStyle) },
+                    fieldState.validating ? _react2.default.createElement(_d2UiCore.CircularProgress, { mode: 'indeterminate', size: 0.33, style: styles.progress }) : undefined,
+                    _react2.default.createElement(field.component, (0, _extends3.default)({
                         value: fieldState.value,
                         onChange: props.changeEvent && props.changeEvent === 'onBlur' ? onBlurChangeHandler : changeHandler,
                         onBlur: props.changeEvent && props.changeEvent === 'onBlur' ? changeHandler : undefined,
@@ -163,7 +210,7 @@ var FormBuilder = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            return React.createElement(
+            return _react2.default.createElement(
                 'div',
                 { style: this.props.style },
                 this.renderFields()
@@ -185,7 +232,7 @@ var FormBuilder = function (_React$Component) {
             var state = {
                 fields: props.fields.reduce(function (fields, field) {
                     var currentFieldState = _this5.state && _this5.state.fields && _this5.state.fields[field.name];
-                    return _Object$assign(fields, _defineProperty({}, field.name, {
+                    return (0, _assign2.default)(fields, (0, _defineProperty3.default)({}, field.name, {
                         value: currentFieldState !== undefined && !currentFieldState.pristine ? currentFieldState.value : field.value,
                         pristine: currentFieldState !== undefined ? currentFieldState.value === field.value : true,
                         validating: currentFieldState !== undefined ? currentFieldState.validating : false,
@@ -195,13 +242,13 @@ var FormBuilder = function (_React$Component) {
                 }, {})
             };
             state.form = {
-                pristine: _Object$keys(state.fields).reduce(function (p, c) {
+                pristine: (0, _keys2.default)(state.fields).reduce(function (p, c) {
                     return p && state.fields[c].pristine;
                 }, true),
-                validating: _Object$keys(state.fields).reduce(function (p, c) {
+                validating: (0, _keys2.default)(state.fields).reduce(function (p, c) {
                     return p || state.fields[c].validating;
                 }, false),
-                valid: _Object$keys(state.fields).reduce(function (p, c) {
+                valid: (0, _keys2.default)(state.fields).reduce(function (p, c) {
                     return p && state.fields[c].valid;
                 }, true)
             };
@@ -266,7 +313,7 @@ var FormBuilder = function (_React$Component) {
             };
 
             // Form state is a composite of field states
-            var fieldNames = _Object$keys(state.fields);
+            var fieldNames = (0, _keys2.default)(state.fields);
             state.form = {
                 pristine: fieldNames.reduce(function (p, current) {
                     return p && state.fields[current].pristine;
@@ -342,7 +389,7 @@ var FormBuilder = function (_React$Component) {
 
             // Update value, and set pristine to false
             this.setState(this.updateFieldState(stateClone, fieldName, { pristine: false, value: newValue }), function () {
-                if (!isObject(newValue) && newValue === (field.value ? field.value : '')) {
+                if (!(0, _lodash.isObject)(newValue) && newValue === (field.value ? field.value : '')) {
                     _this7.props.onUpdateField(fieldName, newValue);
                     return;
                 }
@@ -423,7 +470,7 @@ var FormBuilder = function (_React$Component) {
                 return pass === true ? currentValidator.validator(newValue, stateClone) === true || currentValidator.message : pass;
             }, true);
 
-            if (get(field, 'fieldOptions.disabled')) {
+            if ((0, _lodash.get)(field, 'fieldOptions.disabled')) {
                 validatorResult = true;
             }
 
@@ -450,9 +497,8 @@ var FormBuilder = function (_React$Component) {
             })[0];
         }
     }]);
-
     return FormBuilder;
-}(React.Component);
+}(_react2.default.Component);
 
 /**
  * Component prop types
@@ -461,26 +507,26 @@ var FormBuilder = function (_React$Component) {
 
 
 FormBuilder.propTypes = {
-    fields: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        value: PropTypes.any,
-        component: PropTypes.func.isRequired,
-        props: PropTypes.shape({
-            changeEvent: PropTypes.oneOf(['onChange', 'onBlur'])
+    fields: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+        name: _propTypes2.default.string.isRequired,
+        value: _propTypes2.default.any,
+        component: _propTypes2.default.func.isRequired,
+        props: _propTypes2.default.shape({
+            changeEvent: _propTypes2.default.oneOf(['onChange', 'onBlur'])
         }),
-        validators: PropTypes.arrayOf(PropTypes.shape({
-            validator: PropTypes.func.isRequired,
-            message: PropTypes.string.isRequired
+        validators: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+            validator: _propTypes2.default.func.isRequired,
+            message: _propTypes2.default.string.isRequired
         })),
-        asyncValidators: PropTypes.arrayOf(PropTypes.func.isRequired),
-        validatingLabelText: PropTypes.string
+        asyncValidators: _propTypes2.default.arrayOf(_propTypes2.default.func.isRequired),
+        validatingLabelText: _propTypes2.default.string
     })).isRequired,
-    validatingLabelText: PropTypes.string,
-    validatingProgressStyle: PropTypes.object,
-    onUpdateField: PropTypes.func.isRequired,
-    onUpdateFormStatus: PropTypes.func,
-    style: PropTypes.object,
-    fieldWrapStyle: PropTypes.object
+    validatingLabelText: _propTypes2.default.string,
+    validatingProgressStyle: _propTypes2.default.object,
+    onUpdateField: _propTypes2.default.func.isRequired,
+    onUpdateFormStatus: _propTypes2.default.func,
+    style: _propTypes2.default.object,
+    fieldWrapStyle: _propTypes2.default.object
 };
 
 /**
@@ -497,4 +543,4 @@ FormBuilder.defaultProps = {
     onUpdateFormStatus: noop
 };
 
-export default FormBuilder;
+exports.default = FormBuilder;

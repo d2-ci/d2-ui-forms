@@ -1,4 +1,15 @@
-import _Map from 'babel-runtime/core-js/map';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _map = require('babel-runtime/core-js/map');
+
+var _map2 = _interopRequireDefault(_map);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 // Taken from http://blog.mattheworiordan.com/post/13174566389/url-regular-expression-for-links-with-or-without
 // const urlRegExp = /^(([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?$/i;
 var urlRegExp = /^https?:\/\/[^ ]*/i;
@@ -116,9 +127,9 @@ function isStartDateBeforeEndDate(startDate, endDate) {
 }
 isStartDateBeforeEndDate.message = 'closed_date_cannot_be_before_open_date';
 
-var wordToValidatorMap = new _Map([['required', isRequired], ['url', isUrl], ['relative_url', isRelativeUrl], ['url_array', isUrlArray], ['number', isNumber], ['positive_number', isPositiveNumber], ['email', isEmail], ['is_valid_password', isValidPassword], ['isStartDateBeforeEndDate', isStartDateBeforeEndDate]]);
+var wordToValidatorMap = new _map2.default([['required', isRequired], ['url', isUrl], ['relative_url', isRelativeUrl], ['url_array', isUrlArray], ['number', isNumber], ['positive_number', isPositiveNumber], ['email', isEmail], ['is_valid_password', isValidPassword], ['isStartDateBeforeEndDate', isStartDateBeforeEndDate]]);
 
-export default {
+exports.default = {
     isRequired: isRequired,
     isRelativeUrl: isRelativeUrl,
     isUrl: isUrl,

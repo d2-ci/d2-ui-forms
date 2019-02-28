@@ -1,14 +1,54 @@
-import _extends from 'babel-runtime/helpers/extends';
-import _Object$assign from 'babel-runtime/core-js/object/assign';
-import _Object$getPrototypeOf from 'babel-runtime/core-js/object/get-prototype-of';
-import _classCallCheck from 'babel-runtime/helpers/classCallCheck';
-import _createClass from 'babel-runtime/helpers/createClass';
-import _possibleConstructorReturn from 'babel-runtime/helpers/possibleConstructorReturn';
-import _inherits from 'babel-runtime/helpers/inherits';
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import classes from 'classnames';
-import LinearProgress from 'material-ui/LinearProgress';
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _assign = require('babel-runtime/core-js/object/assign');
+
+var _assign2 = _interopRequireDefault(_assign);
+
+var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
+
+var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _possibleConstructorReturn2 = require('babel-runtime/helpers/possibleConstructorReturn');
+
+var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);
+
+var _inherits2 = require('babel-runtime/helpers/inherits');
+
+var _inherits3 = _interopRequireDefault(_inherits2);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = require('prop-types');
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _classnames = require('classnames');
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _LinearProgress = require('material-ui/LinearProgress');
+
+var _LinearProgress2 = _interopRequireDefault(_LinearProgress);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var emptyComponent = function emptyComponent() {};
 
@@ -25,30 +65,30 @@ var emptyComponent = function emptyComponent() {};
  */
 
 var FormField = function (_Component) {
-    _inherits(FormField, _Component);
+    (0, _inherits3.default)(FormField, _Component);
 
     function FormField() {
         var _ref;
 
         var _temp, _this, _ret;
 
-        _classCallCheck(this, FormField);
+        (0, _classCallCheck3.default)(this, FormField);
 
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = FormField.__proto__ || _Object$getPrototypeOf(FormField)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+        return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = FormField.__proto__ || (0, _getPrototypeOf2.default)(FormField)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
             isFocused: false
         }, _this.onFocus = function () {
             _this.setState({ isFocused: true });
         }, _this.onBlur = function () {
             _this.setState({ isFocused: false });
-        }, _temp), _possibleConstructorReturn(_this, _ret);
+        }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
     } // eslint-disable-line react/no-multi-comp
 
 
-    _createClass(FormField, [{
+    (0, _createClass3.default)(FormField, [{
         key: 'renderHelpText',
         value: function renderHelpText() {
             if (!this.props.fieldOptions || !this.props.fieldOptions.helpText || this.props.errorMessage) {
@@ -64,17 +104,17 @@ var FormField = function (_Component) {
             };
 
             if (dynamic) {
-                _Object$assign(helpStyle, {
+                (0, _assign2.default)(helpStyle, {
                     marginTop: this.state.isFocused ? 0 : -18,
                     marginBottom: this.state.isFocused ? 0 : 0,
                     transition: 'margin 175ms ease-in-out'
                 });
             }
 
-            return React.createElement(
+            return _react2.default.createElement(
                 'div',
                 { style: { overflow: 'hidden', marginTop: dynamic ? -5 : 0 } },
-                React.createElement(
+                _react2.default.createElement(
                     'div',
                     { style: helpStyle },
                     helpText
@@ -86,7 +126,7 @@ var FormField = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            var classList = classes('form-field');
+            var classList = (0, _classnames2.default)('form-field');
 
             var onChangeFn = this.props.updateFn;
             var onBlurFn = this.onBlur;
@@ -100,10 +140,10 @@ var FormField = function (_Component) {
                 onChangeFn = undefined;
             }
 
-            return React.createElement(
+            return _react2.default.createElement(
                 'div',
                 { className: classList },
-                React.createElement(this.props.type, _extends({
+                _react2.default.createElement(this.props.type, (0, _extends3.default)({
                     errorText: this.props.errorMessage,
                     defaultValue: this.props.value,
                     onChange: onChangeFn,
@@ -112,27 +152,26 @@ var FormField = function (_Component) {
                     isRequired: this.props.isRequired
                 }, this.props.fieldOptions)),
                 this.renderHelpText(),
-                this.props.isValidating ? React.createElement(LinearProgress, { mode: 'indeterminate' }) : null
+                this.props.isValidating ? _react2.default.createElement(_LinearProgress2.default, { mode: 'indeterminate' }) : null
             );
         }
     }]);
-
     return FormField;
-}(Component);
+}(_react.Component);
 
 FormField.propTypes = {
-    type: PropTypes.func.isRequired,
-    isValid: PropTypes.bool.isRequired,
-    errorMessage: PropTypes.string,
-    fieldOptions: PropTypes.shape({
-        helpText: PropTypes.string,
-        dynamicHelpText: PropTypes.bool
+    type: _propTypes2.default.func.isRequired,
+    isValid: _propTypes2.default.bool.isRequired,
+    errorMessage: _propTypes2.default.string,
+    fieldOptions: _propTypes2.default.shape({
+        helpText: _propTypes2.default.string,
+        dynamicHelpText: _propTypes2.default.bool
     }).isRequired,
-    value: PropTypes.any,
-    updateFn: PropTypes.func.isRequired,
-    updateEvent: PropTypes.oneOf(['onChange', 'onBlur']),
-    isValidating: PropTypes.bool,
-    isRequired: PropTypes.bool
+    value: _propTypes2.default.any,
+    updateFn: _propTypes2.default.func.isRequired,
+    updateEvent: _propTypes2.default.oneOf(['onChange', 'onBlur']),
+    isValidating: _propTypes2.default.bool,
+    isRequired: _propTypes2.default.bool
 };
 
 FormField.defaultProps = {
@@ -140,4 +179,4 @@ FormField.defaultProps = {
     validators: []
 };
 
-export default FormField;
+exports.default = FormField;
