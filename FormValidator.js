@@ -1,12 +1,41 @@
-import _Array$from from 'babel-runtime/core-js/array/from';
-import _slicedToArray from 'babel-runtime/helpers/slicedToArray';
-import _Map from 'babel-runtime/core-js/map';
-import _Promise from 'babel-runtime/core-js/promise';
-import Rx from 'rxjs';
-import log from 'loglevel';
-import { isFunction } from 'lodash/fp';
+'use strict';
 
-export var FormFieldStatuses = {
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.FormFieldStatuses = undefined;
+
+var _from = require('babel-runtime/core-js/array/from');
+
+var _from2 = _interopRequireDefault(_from);
+
+var _slicedToArray2 = require('babel-runtime/helpers/slicedToArray');
+
+var _slicedToArray3 = _interopRequireDefault(_slicedToArray2);
+
+var _map = require('babel-runtime/core-js/map');
+
+var _map2 = _interopRequireDefault(_map);
+
+var _promise = require('babel-runtime/core-js/promise');
+
+var _promise2 = _interopRequireDefault(_promise);
+
+exports.default = createFormValidator;
+
+var _rxjs = require('rxjs');
+
+var _rxjs2 = _interopRequireDefault(_rxjs);
+
+var _loglevel = require('loglevel');
+
+var _loglevel2 = _interopRequireDefault(_loglevel);
+
+var _fp = require('lodash/fp');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var FormFieldStatuses = exports.FormFieldStatuses = {
     VALID: 'VALID',
     INVALID: 'INVALID',
     VALIDATING: 'VALIDATING'
@@ -17,7 +46,7 @@ function identity(val) {
 }
 
 function getAllPromiseValues(promises) {
-    return _Promise.all(promises.map(function (promise) {
+    return _promise2.default.all(promises.map(function (promise) {
         return promise.then(identity, identity);
     }));
 }
@@ -29,17 +58,17 @@ function validatorRunner(fieldName, fieldValue, formSource) {
         try {
             result = validator(fieldValue, fieldName, formSource);
         } catch (e) {
-            log.debug('Validator for \'' + fieldName + '\' ignored because the validator threw an error.');
-            log.debug('' + validator);
-            log.debug(e.message);
-            return _Promise.resolve(true);
+            _loglevel2.default.debug('Validator for \'' + fieldName + '\' ignored because the validator threw an error.');
+            _loglevel2.default.debug('' + validator);
+            _loglevel2.default.debug(e.message);
+            return _promise2.default.resolve(true);
         }
 
         if (result === false) {
-            return _Promise.reject(validator.message);
+            return _promise2.default.reject(validator.message);
         }
 
-        return _Promise.resolve(result);
+        return _promise2.default.resolve(result);
     };
 }
 
@@ -69,26 +98,26 @@ function getFieldStatus() {
     };
 }
 
-export default function createFormValidator() {
+function createFormValidator() {
     var fieldConfigs = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     var scheduler = arguments[1];
 
-    var validatorQueue = new Rx.Subject();
-    var statusSubject = new Rx.ReplaySubject(1);
+    var validatorQueue = new _rxjs2.default.Subject();
+    var statusSubject = new _rxjs2.default.ReplaySubject(1);
     var initialStatuses = fieldConfigs.filter(function (fieldConfig) {
         return Array.isArray(fieldConfig.validators) && fieldConfig.validators.length > 0;
     }).map(function (fc) {
         return [fc.name, { status: FormFieldStatuses.VALID, messages: [] }];
     });
-    var formFieldStatuses = new _Map(initialStatuses);
+    var formFieldStatuses = new _map2.default(initialStatuses);
 
-    var validatorQueues = new _Map(initialStatuses.map(function (_ref) {
-        var _ref2 = _slicedToArray(_ref, 1),
+    var validatorQueues = new _map2.default(initialStatuses.map(function (_ref) {
+        var _ref2 = (0, _slicedToArray3.default)(_ref, 1),
             name = _ref2[0];
 
-        return [name, new Rx.Subject()];
+        return [name, new _rxjs2.default.Subject()];
     }));
-    _Array$from(validatorQueues.values()).forEach(function (validatorObservable) {
+    (0, _from2.default)(validatorQueues.values()).forEach(function (validatorObservable) {
         validatorObservable.debounceTime(300, scheduler).map(function (_ref3) {
             var fieldName = _ref3.fieldName,
                 fieldValue = _ref3.fieldValue,
@@ -98,18 +127,18 @@ export default function createFormValidator() {
                 return fc.name === fieldName;
             }).shift();
 
-            validatorQueue.next(_Promise.resolve({ fieldName: fieldName, fieldStatus: { status: FormFieldStatuses.VALIDATING, messages: [] } }));
+            validatorQueue.next(_promise2.default.resolve({ fieldName: fieldName, fieldStatus: { status: FormFieldStatuses.VALIDATING, messages: [] } }));
 
             var validatorToRun = fieldConfig.validators.filter(function (validator) {
-                if (!isFunction(validator)) {
-                    log.warn('Warning: One of the validators for \'' + fieldName + '\' is not a function.');
+                if (!(0, _fp.isFunction)(validator)) {
+                    _loglevel2.default.warn('Warning: One of the validators for \'' + fieldName + '\' is not a function.');
                     return false;
                 }
-                return isFunction(validator);
+                return (0, _fp.isFunction)(validator);
             }).map(validatorRunner(fieldName, fieldValue, formSource));
 
             if (!validatorToRun.length) {
-                return _Promise.resolve({
+                return _promise2.default.resolve({
                     fieldName: fieldName,
                     fieldStatus: getFieldStatus()
                 });
@@ -120,7 +149,7 @@ export default function createFormValidator() {
                     fieldName: fieldName,
                     fieldStatus: getFieldStatus(errorMessages)
                 };
-            }).catch(log.error);
+            }).catch(_loglevel2.default.error);
         }).concatAll().subscribe(function (_ref4) {
             var fieldName = _ref4.fieldName,
                 fieldStatus = _ref4.fieldStatus;
